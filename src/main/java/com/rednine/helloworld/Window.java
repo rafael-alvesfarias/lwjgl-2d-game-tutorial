@@ -70,10 +70,6 @@ public class Window {
 		return width;
 	}
 
-	public void setWidth(int width) {
-		this.width = width;
-	}
-
 	public int getHeight() {
 		return height;
 	}
@@ -86,6 +82,12 @@ public class Window {
 	public void setFullscreen(boolean fullscreen) {
 		this.fullscreen = fullscreen;
 	}
+	
+	public void update() {
+		input.update();
+		glfwPollEvents();
+	}
+
 	
 	public boolean isFullscreen() {
 		return fullscreen;
