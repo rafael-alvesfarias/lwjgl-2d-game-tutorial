@@ -66,6 +66,10 @@ public class Main {
 		camera.setPosition(new Vector3f(-100, 0, 0));
 		
 		double frame_cap = 1.0/60.0;
+		
+		double frame_time = 0;
+		int frames = 0;
+		
 		double time = Timer.getTime();
 		double unprocessed = 0;
 		
@@ -76,6 +80,7 @@ public class Main {
 			double time_2 = Timer.getTime();
 			double passed = time_2 - time;
 			unprocessed += passed;
+			frame_time += passed;
 			
 			time = time_2;
 			
@@ -84,10 +89,16 @@ public class Main {
 				unprocessed-=frame_cap;
 				can_render = true;
 				target = scale;
-				glfwPollEvents();
 				
 				if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GL_TRUE) {
 					glfwSetWindowShouldClose(window, true);
+				}
+				
+				glfwPollEvents();
+				if (frame_time >= 1.0) {
+					frame_time = 0;
+					System.out.println("FPS: " + frames);
+					frames = 0;
 				}
 			}
 			
@@ -107,6 +118,7 @@ public class Main {
 				// is being shown in the window
 				// so we need to swap then in order to show the changes
 				glfwSwapBuffers(window);
+				frames++;
 			}
 		}
 		
