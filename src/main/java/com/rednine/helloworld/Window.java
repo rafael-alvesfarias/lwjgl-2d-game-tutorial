@@ -13,6 +13,8 @@ public class Window {
 	
 	private boolean fullscreen;
 	
+	private Input input;
+	
 	public static void setCallbacks() {
 		glfwSetErrorCallback(new GLFWErrorCallback() {
 			@Override
@@ -20,6 +22,8 @@ public class Window {
 				throw new IllegalStateException(GLFWErrorCallback.getDescription(description));
 			}
 		});
+		
+		// try the input callback
 	}
 	
 	public Window() {
@@ -50,6 +54,8 @@ public class Window {
 		}
 		
 		glfwMakeContextCurrent(window);
+		
+		input = new Input(window);
 	}
 	
 	public boolean shouldClose() {
@@ -87,6 +93,10 @@ public class Window {
 	
 	public long getWindow() {
 		return window;
+	}
+	
+	public Input getInput() {
+		return input;
 	}
 
 }
