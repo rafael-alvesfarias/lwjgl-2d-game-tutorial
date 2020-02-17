@@ -16,19 +16,9 @@ public class Main {
 			throw new IllegalStateException("Failed to initialize GLFW");
 		}
 		
-		// creating window
-		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
-		long window = glfwCreateWindow(640, 480, "My LWJGL Program", 0, 0);
-		if (window == 0) {
-			throw new IllegalStateException("Failed to create window");
-		}
+		Window win = new Window();
+		win.createWindow("Game");
 		
-		//moves window to the center
-		GLFWVidMode videoMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-		glfwSetWindowPos(window, (videoMode.width() - 640) / 2, (videoMode.height() - 480) / 2);
-		glfwShowWindow(window);
-		
-		glfwMakeContextCurrent(window);
 		
 		GL.createCapabilities();
 		
@@ -75,8 +65,9 @@ public class Main {
 		
 		
 		//wait for window events
-		while (!glfwWindowShouldClose(window)) {
+		while (!win.shouldClose()) {
 			boolean can_render = false;
+			
 			double time_2 = Timer.getTime();
 			double passed = time_2 - time;
 			unprocessed += passed;
@@ -90,9 +81,9 @@ public class Main {
 				can_render = true;
 				target = scale;
 				
-				if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GL_TRUE) {
-					glfwSetWindowShouldClose(window, true);
-				}
+//				if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GL_TRUE) {
+//					glfwSetWindowShouldClose(window, true);
+//				}
 				
 				glfwPollEvents();
 				if (frame_time >= 1.0) {
@@ -117,7 +108,7 @@ public class Main {
 				// one of them are used to draw the graphics while the other
 				// is being shown in the window
 				// so we need to swap then in order to show the changes
-				glfwSwapBuffers(window);
+				win.swapBuffers();
 				frames++;
 			}
 		}
