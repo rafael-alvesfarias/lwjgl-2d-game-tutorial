@@ -17,12 +17,14 @@ public class Main {
 		}
 		
 		Window win = new Window();
+		win.setSize(1920, 1080);
+		win.setFullscreen(true);
 		win.createWindow("Game");
 		
 		
 		GL.createCapabilities();
 		
-		Camera camera = new Camera(640, 480);
+		Camera camera = new Camera(win.getWidth(), win.getHeight());
 		
 		glEnable(GL_TEXTURE_2D);
 		
@@ -81,9 +83,10 @@ public class Main {
 				can_render = true;
 				target = scale;
 				
-//				if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GL_TRUE) {
-//					glfwSetWindowShouldClose(window, true);
-//				}
+				//temporary
+				if (glfwGetKey(win.getWindow(), GLFW_KEY_ESCAPE) == GL_TRUE) {
+					glfwSetWindowShouldClose(win.getWindow(), true);
+				}
 				
 				glfwPollEvents();
 				if (frame_time >= 1.0) {
