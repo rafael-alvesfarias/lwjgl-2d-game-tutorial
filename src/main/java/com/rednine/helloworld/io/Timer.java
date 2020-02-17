@@ -1,4 +1,4 @@
-package com.rednine.helloworld;
+package com.rednine.helloworld.io;
 
 public class Timer {
 	

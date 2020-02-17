@@ -1,4 +1,4 @@
-package com.rednine.helloworld;
+package com.rednine.helloworld.render;
 
 import static org.lwjgl.opengl.GL13.*;
 import static org.lwjgl.opengl.GL11.*;
@@ -19,7 +19,7 @@ public class Texture {
 		int[] height = new int[1];
 		int[] nrChannels = new int[1];
 		
-		ByteBuffer pixels = stbi_load(fileName, width, height, nrChannels, 0);
+		ByteBuffer pixels = stbi_load("textures/" + fileName, width, height, nrChannels, 0);
 		this.width = width[0];
 		this.height = height[0];
 

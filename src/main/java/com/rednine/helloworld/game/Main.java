@@ -1,4 +1,4 @@
-package com.rednine.helloworld;
+package com.rednine.helloworld.game;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
@@ -7,6 +7,14 @@ import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
+
+import com.rednine.helloworld.io.Timer;
+import com.rednine.helloworld.io.Window;
+import com.rednine.helloworld.render.Camera;
+import com.rednine.helloworld.render.Model;
+import com.rednine.helloworld.render.Shader;
+import com.rednine.helloworld.render.Texture;
+import com.rednine.helloworld.world.TileRenderer;
 
 public class Main {
 	
@@ -29,32 +37,35 @@ public class Main {
 		
 		glEnable(GL_TEXTURE_2D);
 		
-		float[] vertices = new float[] {
-			-0.5f, 0.5f, 0,   //TOP LEFT      0
-			0.5f, 0.5f, 0,    //TOP RIGHT     1
-			0.5f, -0.5f, 0,   //BOTTOM RIGHT  2
-			-0.5f, -0.5f, 0,  //BOTTOM LEFT   3
-		};
+		TileRenderer tiles = new TileRenderer();
 		
-		float[] texture = new float[] {
-				0,0,
-				1,0,
-				1,1,
-				0,1,
-		};
-		
-		int[] indices = new int[] {
-				0,1,2,
-				2,3,0
-		};
-		
-		Model model = new Model(vertices, texture, indices);
+//		float[] vertices = new float[] {
+//			-0.5f, 0.5f, 0,   //TOP LEFT      0
+//			0.5f, 0.5f, 0,    //TOP RIGHT     1
+//			0.5f, -0.5f, 0,   //BOTTOM RIGHT  2
+//			-0.5f, -0.5f, 0,  //BOTTOM LEFT   3
+//		};
+//		
+//		float[] texture = new float[] {
+//				0,0,
+//				1,0,
+//				1,1,
+//				0,1,
+//		};
+//		
+//		int[] indices = new int[] {
+//				0,1,2,
+//				2,3,0
+//		};
+//		
+//		Model model = new Model(vertices, texture, indices);
 		Shader shader = new Shader("shader");
-		Texture tex = new Texture("resources/tree.png");
+//		Texture tex = new Texture("resources/tree.png");
 		
 		Matrix4f scale = new Matrix4f()
-				.translate(new Vector3f(100, 0, 0))
-				.scale(64);
+				.translate(new Vector3f(0, 0, 0))
+				.scale(16);
+		
 		Matrix4f target = new Matrix4f();
 		camera.setPosition(new Vector3f(-100, 0, 0));
 		
@@ -101,11 +112,15 @@ public class Main {
 				// clear color
 				glClear(GL_COLOR_BUFFER_BIT);
 				
-				shader.bind();
-				shader.setUniform("sampler", 0);
-				shader.setUniform("projection", camera.getProjection().mul(target));
-				model.render();
-				tex.bind(0);
+//				shader.bind();
+//				shader.setUniform("sampler", 0);
+//				shader.setUniform("projection", camera.getProjection().mul(target));
+//				model.render();
+//				tex.bind(0);
+				
+				for (int i = 0; i < 8; i++)
+					for (int j = 0; j < 4; j++)
+						tiles.renderTile((byte) 0, i, j, shader, scale, camera);
 				
 				// there are two contexts in opengl
 				// one of them are used to draw the graphics while the other

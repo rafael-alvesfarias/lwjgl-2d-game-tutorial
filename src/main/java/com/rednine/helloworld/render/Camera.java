@@ -1,4 +1,4 @@
-package com.rednine.helloworld;
+package com.rednine.helloworld.render;
 
 import org.joml.Matrix4f;
 import org.joml.Vector3f;

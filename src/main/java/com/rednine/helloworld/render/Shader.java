@@ -1,4 +1,4 @@
-package com.rednine.helloworld;
+package com.rednine.helloworld.render;
 
 import static org.lwjgl.opengl.GL20.*;
 
