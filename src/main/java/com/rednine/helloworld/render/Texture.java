@@ -22,6 +22,9 @@ public class Texture {
 		ByteBuffer pixels = stbi_load("textures/" + fileName, width, height, nrChannels, 0);
 		this.width = width[0];
 		this.height = height[0];
+		
+		System.out.println(this.width);
+		System.out.println(this.height);
 
 		pixels.flip();
 		

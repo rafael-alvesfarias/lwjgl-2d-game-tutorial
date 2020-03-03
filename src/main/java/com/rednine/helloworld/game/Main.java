@@ -64,12 +64,12 @@ public class Main {
 		
 		Matrix4f scale = new Matrix4f()
 				.translate(new Vector3f(0, 0, 0))
-				.scale(16);
+				.scale(32);
 		
 		Matrix4f target = new Matrix4f();
 		camera.setPosition(new Vector3f(-100, 0, 0));
 		
-		double frame_cap = 1.0/60.0;
+		double frame_cap = 1.0 / 60.0;
 		
 		double frame_time = 0;
 		int frames = 0;
@@ -120,7 +120,7 @@ public class Main {
 				
 				for (int i = 0; i < 8; i++)
 					for (int j = 0; j < 4; j++)
-						tiles.renderTile((byte) 0, i, j, shader, scale, camera);
+						tiles.renderTile((byte) 1, i, j, shader, scale, camera);
 				
 				// there are two contexts in opengl
 				// one of them are used to draw the graphics while the other
