@@ -11,7 +11,7 @@ public class Camera {
 	public Camera(int width, int height) {
 		position = new Vector3f(0, 0, 0);
 		//usint Matrix4f.ortho2D creates two matrices and multiply then
-		//using Matrix4f.setOrtho2D only creates one matrix
+		//using Matrix4f.setOrtho2D creates only one matrix
 		projection = new Matrix4f().setOrtho2D(-width/2, width/2, -height/2, height/2);
 	}
 	

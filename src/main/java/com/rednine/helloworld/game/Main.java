@@ -14,6 +14,7 @@ import com.rednine.helloworld.render.Camera;
 import com.rednine.helloworld.render.Model;
 import com.rednine.helloworld.render.Shader;
 import com.rednine.helloworld.render.Texture;
+import com.rednine.helloworld.world.Tile;
 import com.rednine.helloworld.world.TileRenderer;
 import com.rednine.helloworld.world.World;
 
@@ -64,8 +65,10 @@ public class Main {
 //		Texture tex = new Texture("resources/tree.png");
 		
 		World world = new World();
-		
-		camera.setPosition(new Vector3f(-100, 0, 0));
+		world.setTile(Tile.grass_32, 0, 0);
+		world.setTile(Tile.grass_32, 63, 0);
+		world.setTile(Tile.grass_32, 0, 63);
+		world.setTile(Tile.grass_32, 63, 63);
 		
 		double frame_cap = 1.0 / 60.0;
 		
@@ -96,21 +99,33 @@ public class Main {
 					glfwSetWindowShouldClose(win.getWindow(), true);
 				}
 				
+				// A camera nao existe fisicamente em opengl, entao move-la para
+				// a sua posicao para direita acaba movendo todos os objetos que
+				// usam a sua projecao para a direita, então devido a isso o
+				// movimento deve ser invertido.
+				// Essa logica de inversao poderia ser movida para um metodo interno
+				// da classe Camera.
+				// Usar o metodo sub ao inves de add parece estar confundindo ainda
+				// mais esta movimentacao, porém apenas mantive da forma como está no tutorial
+				// neste momento.
+				
 				if (win.getInput().isKeyDown(GLFW_KEY_A)) {
-					camera.getPosition().sub(new Vector3f(-1, 0, 0));
+					camera.getPosition().sub(new Vector3f(-5, 0, 0));
 				}
 				
 				if (win.getInput().isKeyDown(GLFW_KEY_D)) {
-					camera.getPosition().sub(new Vector3f(1, 0, 0));
+					camera.getPosition().sub(new Vector3f(5, 0, 0));
 				}
 				
 				if (win.getInput().isKeyDown(GLFW_KEY_W)) {
-					camera.getPosition().sub(new Vector3f(0, 1, 0));
+					camera.getPosition().sub(new Vector3f(0, 5, 0));
 				}
 				
 				if (win.getInput().isKeyDown(GLFW_KEY_S)) {
-					camera.getPosition().sub(new Vector3f(0, -1, 0));
+					camera.getPosition().sub(new Vector3f(0, -5, 0));
 				}
+				
+				world.correctCamera(camera, win);
 				
 				win.update();
 				if (frame_time >= 1.0) {
