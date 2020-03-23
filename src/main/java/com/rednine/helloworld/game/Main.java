@@ -15,6 +15,7 @@ import com.rednine.helloworld.render.Model;
 import com.rednine.helloworld.render.Shader;
 import com.rednine.helloworld.render.Texture;
 import com.rednine.helloworld.world.TileRenderer;
+import com.rednine.helloworld.world.World;
 
 public class Main {
 	
@@ -62,11 +63,8 @@ public class Main {
 		Shader shader = new Shader("shader");
 //		Texture tex = new Texture("resources/tree.png");
 		
-		Matrix4f scale = new Matrix4f()
-				.translate(new Vector3f(0, 0, 0))
-				.scale(32);
+		World world = new World();
 		
-		Matrix4f target = new Matrix4f();
 		camera.setPosition(new Vector3f(-100, 0, 0));
 		
 		double frame_cap = 1.0 / 60.0;
@@ -93,10 +91,25 @@ public class Main {
 			while (unprocessed >= frame_cap) {
 				unprocessed-=frame_cap;
 				can_render = true;
-				target = scale;
 				
 				if (win.getInput().isKeyPressed(GLFW_KEY_ESCAPE)) {
 					glfwSetWindowShouldClose(win.getWindow(), true);
+				}
+				
+				if (win.getInput().isKeyDown(GLFW_KEY_A)) {
+					camera.getPosition().sub(new Vector3f(-1, 0, 0));
+				}
+				
+				if (win.getInput().isKeyDown(GLFW_KEY_D)) {
+					camera.getPosition().sub(new Vector3f(1, 0, 0));
+				}
+				
+				if (win.getInput().isKeyDown(GLFW_KEY_W)) {
+					camera.getPosition().sub(new Vector3f(0, 1, 0));
+				}
+				
+				if (win.getInput().isKeyDown(GLFW_KEY_S)) {
+					camera.getPosition().sub(new Vector3f(0, -1, 0));
 				}
 				
 				win.update();
@@ -118,9 +131,7 @@ public class Main {
 //				model.render();
 //				tex.bind(0);
 				
-				for (int i = 0; i < 8; i++)
-					for (int j = 0; j < 4; j++)
-						tiles.renderTile((byte) 1, i, j, shader, scale, camera);
+				world.render(tiles, shader, camera);
 				
 				// there are two contexts in opengl
 				// one of them are used to draw the graphics while the other
